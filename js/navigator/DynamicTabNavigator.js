@@ -56,13 +56,6 @@ export default class DynamicTabNavigator extends Component<Props> {
         console.disableYellowBox = true;
     }
   _tabNavigator(){
-    // return createBottomTabNavigator({
-      
-    // },{
-    //   tabBarOptions: {
-    //     activeTintColor: Platform.OS === 'ios' ? '#e91e63' : '#fff',
-    //   }
-    // })
     const { PopularPage, TrendingPage, FavoritePage, MyPage } = TABS;
     const tabs = {PopularPage, TrendingPage, FavoritePage, MyPage}; // 根据需要定制显示的tab
     PopularPage.navigationOptions.tabBarLabel = '最新';
