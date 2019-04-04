@@ -23,6 +23,11 @@ export default class PopularPage extends Component<Props> {
       }
     })
   }
+
+  constructor(props){
+    super(props);
+    console.disableYellowBox = true;
+  }
   render() {
     const TopNav = createAppContainer(this._topBarNavigator())
     return <View style={{flex:1, marginTop: 30}}>
