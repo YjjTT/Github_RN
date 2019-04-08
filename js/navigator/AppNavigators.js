@@ -8,6 +8,10 @@ import React from 'react';
 import HomePage from '../page/HomePage';
 import DetailPage from '../page/DetailPage';
 import Welcome from '../page/Welcome';
+import { connect } from 'react-redux';
+import {createReactNavigationReduxMiddleware, createReduxContainer, createNavigationReducer,reduxifyNavigator } from 'react-navigation-redux-helpers'
+
+export const rootCom = 'Init';
 
 const InitNavigator = createStackNavigator({
     Welcome:{
@@ -33,12 +37,20 @@ const MainNavigator = createStackNavigator({
     }
 });
 
-export default createSwitchNavigator(
-    {
+const RootNavigator = createSwitchNavigator({
         Init: InitNavigator,
         Main: MainNavigator,
-    },
-    {
-        initialRouteName: 'Init'
-    }
+})
+const middleware = createReactNavigationReduxMiddleware(
+    'root',
+    state => state.nav
 )
+
+const App = createReduxContainer(RootNavigator, 'root');
+
+
+const mapStateToProps = (state) => ({
+    state: state.nav,
+})
+
+export default connect(mapStateToProps)(App);
