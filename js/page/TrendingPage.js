@@ -3,6 +3,7 @@ import {Platform, StyleSheet, Text, View, Button} from 'react-native';
 import {connect} from 'react-redux'
 import actions from '../action/index'
 
+
 type Props = {};
 class TrendingPage extends Component<Props> {
   render() {
@@ -13,7 +14,7 @@ class TrendingPage extends Component<Props> {
         <Button 
           title="改变主题颜色"
           onPress={()=>{
-            this.props.onThemeChange('#096');
+            this.props.onThemeChange('red');
           }}
         />
       </View>

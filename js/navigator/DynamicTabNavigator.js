@@ -57,10 +57,13 @@ class DynamicTabNavigator extends Component<Props> {
         console.disableYellowBox = true;
     }
   _tabNavigator(){
+    if(this.Tabs){
+      return this.Tabs
+    }
     const { PopularPage, TrendingPage, FavoritePage, MyPage } = TABS;
     const tabs = {PopularPage, TrendingPage, FavoritePage, MyPage}; // 根据需要定制显示的tab
     PopularPage.navigationOptions.tabBarLabel = '最新';
-    return createBottomTabNavigator(tabs,{
+    return this.Tabs = createBottomTabNavigator(tabs,{
       tabBarComponent: props=>{
         return <TabBarComponent theme={this.props.theme} {...props} />
       }
@@ -82,18 +85,10 @@ class TabBarComponent extends Component{
     }
   }
   render (){
-    const { routes, index } = this.props.navigation.state;
-      if(routes[index].params){
-        // 以最新的更新时间为主
-        const {theme} = routes[index].params;
-        if(theme&&theme.updateTime>this.theme.updateTime){
-          this.theme = theme;
-        }
-      }
     return(
       <BottomTabBar 
         {...this.props}
-        activeTintColor={this.theme.tintColor||this.props.activeTintColor}
+        activeTintColor={this.props.theme}
       />
     )
   }

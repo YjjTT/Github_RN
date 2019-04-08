@@ -1,5 +1,5 @@
 import Types from '../types';
 
-export function onTheme(theme){
+export default function onTheme(theme){
     return {type: Types.THEME_CHANGE, theme: theme}
 }

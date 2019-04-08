@@ -37,16 +37,17 @@ const MainNavigator = createStackNavigator({
     }
 });
 
-const RootNavigator = createSwitchNavigator({
+export const RootNavigator = createSwitchNavigator({
         Init: InitNavigator,
         Main: MainNavigator,
-})
-const middleware = createReactNavigationReduxMiddleware(
-    'root',
-    state => state.nav
+},{ initialRouteName: 'Init'})
+
+export const middleware = createReactNavigationReduxMiddleware(
+    state => state.nav,
+    "root",
 )
 
-const App = createReduxContainer(RootNavigator, 'root');
+const App = createReduxContainer(RootNavigator, "root");
 
 
 const mapStateToProps = (state) => ({

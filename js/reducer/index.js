@@ -18,7 +18,6 @@ const navReducer = (state = navState, action) => {
     return nextState || state;
 };
 
-
 const index = combineReducers({
     nav: navReducer,
     theme: theme,
