@@ -10,6 +10,7 @@ import DetailPage from '../page/DetailPage';
 import Welcome from '../page/Welcome';
 import FetchDemoPage from '../page/FetchDemoPage';
 import AsyncStorageDemoPage from '../page/AsyncStorageDemoPage'
+import DataStoreDemoPage from '../page/DataStoreDemoPage'
 import { connect } from 'react-redux';
 import {createReactNavigationReduxMiddleware, createReduxContainer, createNavigationReducer,reduxifyNavigator } from 'react-navigation-redux-helpers'
 
@@ -47,6 +48,12 @@ const MainNavigator = createStackNavigator({
         screen: AsyncStorageDemoPage,
         navigationOptions:{
             title: 'AsyncStorage'
+        }
+    },
+    DataStoreDemoPage:{
+        screen: DataStoreDemoPage,
+        navigationOptions:{
+            title: 'DataStoreDemoPage'
         }
     }
 });

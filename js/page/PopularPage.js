@@ -86,6 +86,15 @@ class PopularTab extends Component<Props> {
             );
           }}
         />
+        <Button
+          title="DataStore使用"
+          onPress={() => {
+            NavigationUtil.goPage(
+              {navigation: this.props.navigation},
+              "DataStoreDemoPage"
+            );
+          }}
+        />
       </View>
     );
   }
