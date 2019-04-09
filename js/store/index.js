@@ -5,6 +5,7 @@ import {middleware} from '../navigator/AppNavigators';
 
 const middlewares = [
     middleware,
+    thunk,
 ]
 
 /**
