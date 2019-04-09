@@ -1,14 +1,16 @@
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View, Button } from "react-native";
+import { Platform, StyleSheet, Text, View, Button, FlatList, RefreshControl } from "react-native";
 import {
   createMaterialTopTabNavigator,
   createAppContainer
 } from "react-navigation";
-import FavoritePage from "./FavoritePage";
-import TrendingPage from "./TrendingPage";
+import {connect} from 'react-redux'
+import actions from '../action/index'
 import NavigationUtil from "../navigator/NavigationUtil";
-type Props = {};
 
+const URL = 'https://api.github.com/search/repositories?q=';
+const QUERY_STR = '&sort=stars';
+type Props = {};
 export default class PopularPage extends Component<Props> {
   _topBarNavigator() {
     return createMaterialTopTabNavigator(this._genTabs(), {
@@ -29,7 +31,7 @@ export default class PopularPage extends Component<Props> {
     this.tabNames.forEach((item, index) => {
       tabs[`tab${index}`] = {
         // screen: PopularTab,
-        screen: props => <PopularTab {...props} tabBarLabel={item} />,
+        screen: props => <PopularTabPage {...props} tabBarLabel={item} />,
         navigationOptions: {
           title: item
         }
@@ -53,52 +55,67 @@ export default class PopularPage extends Component<Props> {
 }
 
 class PopularTab extends Component<Props> {
-  render() {
+  constructor(props){
+    super(props);
     const { tabBarLabel } = this.props;
+    this.storeName = tabBarLabel;
+  }
+  componentDidMount(){
+    this.loadData();
+  }
+  loadData(){
+    const { onLoadPopularData } = this.props;
+    const url = this.genFetchUrl(this.storeName);
+    onLoadPopularData(this.storeName, url);
+  }
+  genFetchUrl(key){
+    return URL + key + QUERY_STR;
+  }
+  renderItem(data){
+    const item = data.item;
+    return <View style={{marginBottom: 10}}>
+      <Text>{JSON.stringify(item)}</Text>
+    </View>
+  }
+  render() {
+    const { popular,tabBarLabel } = this.props;
+    let store = popular[this.storeName]; // 动态获取state
+    if(!store){
+      store={
+        items: [],
+        isLoading: false
+      }
+    }
     return (
       <View>
         <Text style={{ textAlign: "center" }}>{tabBarLabel}</Text>
-        <Text
-          onPress={() => {
-            NavigationUtil.goPage(
-              {navigation: this.props.navigation},
-              "DetailPage"
-            );
-          }}
-        >
-          跳转到详情页
-        </Text>
-        <Button
-          title="Fetch使用"
-          onPress={() => {
-            NavigationUtil.goPage(
-              {navigation: this.props.navigation},
-              "FetchDemoPage"
-            );
-          }}
-        />
-        <Button
-          title="AsyncStorage使用"
-          onPress={() => {
-            NavigationUtil.goPage(
-              {navigation: this.props.navigation},
-              "AsyncStorageDemoPage"
-            );
-          }}
-        />
-        <Button
-          title="DataStore使用"
-          onPress={() => {
-            NavigationUtil.goPage(
-              {navigation: this.props.navigation},
-              "DataStoreDemoPage"
-            );
-          }}
+        <FlatList 
+          data={store.item}
+          renderItem={data=>this.renderItem(data)}
+          keyExtractor={item=>""+item.id}
+          RefreshControl={
+            <RefreshControl 
+              title={'Loading'}
+              titleColor={'red'}
+              colors={['red']}
+              refreshind={store.isLoading}
+              onRefresh={()=>this.loadData()}
+              tintColor={'red'}
+            />
+          }
         />
       </View>
     );
   }
 }
+
+const mapState = (state) => ({
+  popular: state.popular
+})
+const mapDispatch = (dispatch) => ({
+  onLoadPopularData: (storeName, url) => dispatch(actions.onLoadPopularData(storeName, url))
+})
+const PopularTabPage = connect(mapState, mapDispatch)(PopularTab)
 
 const styles = StyleSheet.create({
   tabStyle: {

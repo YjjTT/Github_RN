@@ -7,6 +7,43 @@ export default class MyPage extends Component<Props> {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>MyPage</Text>
+        <Text
+          onPress={() => {
+            NavigationUtil.goPage(
+              {navigation: this.props.navigation},
+              "DetailPage"
+            );
+          }}
+        >
+          跳转到详情页
+        </Text>
+        <Button
+          title="Fetch使用"
+          onPress={() => {
+            NavigationUtil.goPage(
+              {navigation: this.props.navigation},
+              "FetchDemoPage"
+            );
+          }}
+        />
+        <Button
+          title="AsyncStorage使用"
+          onPress={() => {
+            NavigationUtil.goPage(
+              {navigation: this.props.navigation},
+              "AsyncStorageDemoPage"
+            );
+          }}
+        />
+        <Button
+          title="DataStore使用"
+          onPress={() => {
+            NavigationUtil.goPage(
+              {navigation: this.props.navigation},
+              "DataStoreDemoPage"
+            );
+          }}
+        />
       </View>
     );
   }
