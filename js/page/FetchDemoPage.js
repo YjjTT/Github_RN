@@ -19,12 +19,22 @@ export default class FetchDemoPage extends Component<Props> {
   loadData() {
     let url = `https://api.github.com/search/repositories?q=${this.searchKey}`;
     fetch(url)
-      .then(response => response.text())
+      .then(response => {
+				if(response.ok){
+					return response.text()
+				}
+				throw new Error('error')
+			})
       .then(responseText => {
-        this.setState({
+        this.setState({ 
           showText: responseText
-        });
-      });
+        })
+			})
+			.catch(e=>{
+				this.setState({
+					showText: responseText
+				})
+			})
   }
   render() {
     return (
