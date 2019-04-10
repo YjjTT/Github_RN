@@ -1,48 +1,80 @@
 import Types from "../../action/types";
 
 const defaultState = {};
-
 /**
- * popular{
- *   java:{
- *      items:[],
- *      isLoading: false
- *   },
- *   ios:{
- *      items:[],
- *      isLoading: false
- *   }
+ * popular:{
+ *     java:{
+ *         items:[],
+ *         isLoading:false
+ *     },
+ *     ios:{
+ *         items:[],
+ *         isLoading:false
+ *     }
  * }
- * state树, 横向扩展
- * 如果动态的设置store, 和动态获取store(难点: store key不固定)
- * @param {state} state
- * @param {action} action
+ * 0.state树，横向扩展
+ * 1.如何动态的设置store，和动态获取store(难点：store key不固定)；
+ * @param state
+ * @param action
+ * @returns {{theme: (onAction|*|string)}}
  */
-export default function OnAction(state = defaultState, action) {
+export default function onAction(state = defaultState, action) {
   switch (action.type) {
-    case Types.LOAD_POPULAT_SUCCESS:
+    case Types.POPULAR_REFRESH_SUCCESS: //下拉刷新成功
+    console.log(action);
       return {
         ...state,
         [action.storeName]: {
-          ...[action.storeName],
-          items: action.items,
+          ...state[action.storeName],
+          items: action.items, //原始数据
+          projectModes: action.projectModes, //此次要展示的数据
+          isLoading: false,
+          hideLoadingMore: false,
+          pageIndex: action.pageIndex
+        }
+      };
+    case Types.POPULAR_REFRESH: //下拉刷新
+      return {
+        ...state,
+        [action.storeName]: {
+          ...state[action.storeName],
+          isLoading: true,
+          hideLoadingMore: true
+        }
+      };
+    case Types.POPULAR_REFRESH_FAIL: //下拉刷新失败
+      return {
+        ...state,
+        [action.storeName]: {
+          ...state[action.storeName],
           isLoading: false
         }
       };
-    case Types.POPULAT_REFRESH:
+    case Types.POPULAR_LOAD_MORE_SUCCESS: //上拉加载更多成功
       return {
-        ...state,
+        ...state, //Object.assign @http://www.devio.org/2018/09/09/ES6-ES7-ES8-Feature/
         [action.storeName]: {
-          ...[action.storeName],
-          isLoading: true
+          ...state[action.storeName],
+          projectModes: action.projectModes,
+          hideLoadingMore: false,
+          pageIndex: action.pageIndex
         }
       };
-    case Types.LOAD_POPULAT_FAIL:
+    case Types.POPULAR_LOAD_MORE_FAIL: //上拉加载更多失败
+      return {
+        ...state, //Object.assign @http://www.devio.org/2018/09/09/ES6-ES7-ES8-Feature/
+        [action.storeName]: {
+          ...state[action.storeName],
+          hideLoadingMore: true,
+          pageIndex: action.pageIndex
+        }
+      };
+    case Types.FLUSH_POPULAR_FAVORITE: //刷新收藏状态
       return {
         ...state,
         [action.storeName]: {
-          ...[action.storeName],
-          isLoading: false
+          ...state[action.storeName],
+          projectModes: action.projectModes
         }
       };
     default:
