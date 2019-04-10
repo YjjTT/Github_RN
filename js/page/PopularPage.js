@@ -148,9 +148,19 @@ class PopularTab extends Component<Props> {
           }
           ListFooterComponent={() => this.genIndicator()}
           onEndReached={() => {
-            this.loadData(true);
+            setTimeout(()=>{
+              if(this.canLoadMore){
+                this.loadData(true);
+                this.canLoadMore = false;
+              }
+            }, 100)
           }}
           onEndReachedThreshold={0.5}
+
+          // 防止多次调用onEndReached, 一次滚动加载一次
+          onMomentumScrollBegin={()=>{
+            this.canLoadMore = true;
+          }}
         />
         <Toast ref={"toast"} position={"center"} />
       </View>
