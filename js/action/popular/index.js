@@ -6,7 +6,7 @@ import DataStore from '../../expand/dao/DataStore'
  * @param {*} storeName 
  * @param {*} url 
  */
-export function onLoadPopularData(storeName, url){
+export default function onLoadPopularData(storeName, url){
     return dispatch=>{
         dispatch({
             type: Types.POPULAT_REFRESH, 

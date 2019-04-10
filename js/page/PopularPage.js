@@ -66,6 +66,7 @@ class PopularTab extends Component<Props> {
   loadData(){
     const { onLoadPopularData } = this.props;
     const url = this.genFetchUrl(this.storeName);
+    console.log(url);
     onLoadPopularData(this.storeName, url);
   }
   genFetchUrl(key){
@@ -74,12 +75,13 @@ class PopularTab extends Component<Props> {
   renderItem(data){
     const item = data.item;
     return <View style={{marginBottom: 10}}>
-      <Text>{JSON.stringify(item)}</Text>
+      <Text style={{backgroundColor:'#faa'}}>{JSON.stringify(item)}</Text>
     </View>
   }
   render() {
     const { popular,tabBarLabel } = this.props;
     let store = popular[this.storeName]; // 动态获取state
+    console.log(store);
     if(!store){
       store={
         items: [],
@@ -90,9 +92,9 @@ class PopularTab extends Component<Props> {
       <View>
         <Text style={{ textAlign: "center" }}>{tabBarLabel}</Text>
         <FlatList 
-          data={store.item}
+          data={store.items}
           renderItem={data=>this.renderItem(data)}
-          keyExtractor={item=>""+item.id}
+          keyExtractor={item=>{""+item.id}}
           RefreshControl={
             <RefreshControl 
               title={'Loading'}
