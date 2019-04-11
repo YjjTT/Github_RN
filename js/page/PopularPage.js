@@ -18,6 +18,7 @@ import actions from "../action/index";
 import NavigationUtil from "../navigator/NavigationUtil";
 import PopularItem from "../common/PopularItem";
 import Toast from "react-native-easy-toast";
+import NavigationBar from '../common/NavigationBar'
 
 const URL = "https://api.github.com/search/repositories?q=";
 const QUERY_STR = "&sort=stars";
@@ -56,9 +57,16 @@ export default class PopularPage extends Component<Props> {
     this.tabNames = ["Java", "Android", "iOS", "React", "React Native", "Vue"];
   }
   render() {
+    let statusBar = {
+      backgroundColor: '#678',
+      barStyle: 'light-content'
+    }
+    let navigationBar = <NavigationBar title={'最热'} statusBar={statusBar} style={{backgroundColor:'#678'}}/>
+
     const TopNav = createAppContainer(this._topBarNavigator());
     return (
       <View style={{ flex: 1, marginTop: 30 }}>
+      {navigationBar}
         <TopNav />
       </View>
     );
