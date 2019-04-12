@@ -142,7 +142,7 @@ class PopularTab extends Component<Props> {
           data={store.projectModes}
           renderItem={data => this.renderItem(data)}
           keyExtractor={item => {
-            "" + item.id;
+            "" + (item.id || item.fullName);
           }}
           refreshControl={
             <RefreshControl
