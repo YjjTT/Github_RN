@@ -8,7 +8,9 @@ import {
   FlatList,
   RefreshControl,
   ActivityIndicator,
-  DeviceInfo
+  DeviceInfo,
+  TouchableOpacity,
+  DeviceEventEmitter,
 } from "react-native";
 import {
   createMaterialTopTabNavigator,
@@ -20,32 +22,47 @@ import NavigationUtil from "../navigator/NavigationUtil";
 import TrendingItem from "../common/TrendingItem";
 import Toast from "react-native-easy-toast";
 import NavigationBar from '../common/NavigationBar'
+import TrendingDialog, {TimeSpans} from '../common/TrendingDialog'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
+const EVENT_TYPE_TIME_SPAN_CHANGE = 'EVENT_TYPE_TIME_SPAN_CHANGE';
 const URL = 'https://github.com/trending/';
 const QUERY_STR = "?since=daily";
 type Props = {};
+
 export default class TrendingPage extends Component<Props> {
+  constructor(props) {
+    super(props);
+    console.disableYellowBox = true;
+    this.tabNames = ["All", "C", "C#", "PHP", "JavaScript"];
+    this.state = {
+      timeSpan: TimeSpans[0]
+    }
+  } 
   _topBarNavigator() {
-    return createMaterialTopTabNavigator(this._genTabs(), {
-      tabBarOptions: {
-        tabStyle: StyleSheet.tabStyle,
-        upperCaseLabel: false, // 是否标签大写
-        scrollEnabled: true,
-        style: {
-          backgroundColor: "#678",
-          height: 30,
-        },
-        indicatorStyle: styles.indicatorStyle,
-        labelStyle: styles.labelStyle
-      }
-    });
+    if(!this.tabNav){
+      this.tabNav = createMaterialTopTabNavigator(this._genTabs(), {
+        tabBarOptions: {
+          tabStyle: StyleSheet.tabStyle,
+          upperCaseLabel: false, // 是否标签大写
+          scrollEnabled: true,
+          style: {
+            backgroundColor: "#678",
+            height: 30,
+          },
+          indicatorStyle: styles.indicatorStyle,
+          labelStyle: styles.labelStyle
+        }
+      });
+    }
+    return this.tabNav;
   }
   _genTabs() {
     const tabs = {};
     this.tabNames.forEach((item, index) => {
       tabs[`tab${index}`] = {
         // screen: PopularTab,
-        screen: props => <TrendingTabPage {...props} tabBarLabel={item} />,
+        screen: props => <TrendingTabPage {...props} timeSpan={this.state.timeSpan} tabBarLabel={item} />,
         navigationOptions: {
           title: item
         }
@@ -53,36 +70,77 @@ export default class TrendingPage extends Component<Props> {
     });
     return tabs;
   }
-  constructor(props) {
-    super(props);
-    console.disableYellowBox = true;
-    this.tabNames = ["All", "C", "C#", "PHP", "JavaScript"];
+  renderTitleView(){
+    return(
+      <View>
+        <TouchableOpacity
+          ref='button'
+          underlayColor='transparent'
+          onPress={()=>this.dialog.show()}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Text style={{fontSize: 18, color: '#FFFFFF', fontWeight: '400'}}>趋势 {this.state.timeSpan.showText}</Text>
+            <MaterialIcons name={'arrow-drop-down'} size={22} style={{color: 'white'}}/>
+          </View>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+  onSelectTimeSpan(tab){
+    this.dialog.dismiss();
+    this.setState({
+      timeSpan: tab
+    })
+    DeviceEventEmitter.emit(EVENT_TYPE_TIME_SPAN_CHANGE, tab);
+  }
+  renderTrendingDialog(){
+    return(
+      <TrendingDialog 
+        ref={dialog=>this.dialog=dialog}
+        onSelect={tab=>this.onSelectTimeSpan(tab)}
+      />
+    )
   }
   render() {
     let statusBar = {
       backgroundColor: '#678',
       barStyle: 'light-content'
     }
-    let navigationBar = <NavigationBar title={'趋势'} statusBar={statusBar} style={{backgroundColor:'#678'}}/>
+    let navigationBar = <NavigationBar 
+        titleView={this.renderTitleView()}
+        statusBar={statusBar} 
+        style={{backgroundColor:'#678'}}
+        />
 
     const TopNav = createAppContainer(this._topBarNavigator());
     return (
       <View style={{ flex: 1, marginTop: DeviceInfo.isIPhoneX_deprecated ? 30 : 0 }}>
-      {navigationBar}
+        {navigationBar}
         <TopNav />
+        {this.renderTrendingDialog()}
       </View>
     );
   }
 }
+
 const pageSize = 10;
 class TrendingTab extends Component<Props> {
   constructor(props) {
     super(props);
-    const { tabBarLabel } = this.props;
+    const { tabBarLabel,timeSpan } = this.props;
     this.storeName = tabBarLabel;
+    this.timeSpan = timeSpan;
   }
   componentDidMount() {
     this.loadData(false);
+    this.timeSpanChangeListener = DeviceEventEmitter.addListener(EVENT_TYPE_TIME_SPAN_CHANGE, (timeSpan)=>{
+      this.timeSpan = timeSpan;
+      this.loadData();
+    })
+  }
+  componentWillUnmount(){
+    if(this.timeSpanChangeListener){
+      this.timeSpanChangeListener.remove();
+    }
   }
   loadData(loadMore) {
     const { onRefreshTrending, onLoadMoreTrending } = this.props;
@@ -119,7 +177,7 @@ class TrendingTab extends Component<Props> {
     return store;
   }
   genFetchUrl(key) {
-    return URL + key + QUERY_STR;
+    return URL + key + '?' + this.timeSpan.searchText;
   }
   renderItem(data) {
     const item = data.item;

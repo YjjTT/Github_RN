@@ -49,7 +49,7 @@ export default class TrendingItem extends Component {
             <View
               style={{ justifyContent: "space-between", flexDirection: "row" }}
             >
-              <Text>Start:</Text>
+              <Text>Star:</Text>
               <Text>{item.starCount}</Text>
             </View>
             {favoriteButton}

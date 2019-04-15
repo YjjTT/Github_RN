@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
   },
   labelStyle: {
     fontSize: 13,
-    margin: 0
+    margin: 0,
   },
   indicatorContainer: {
     alignItems: "center"
