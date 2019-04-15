@@ -181,7 +181,11 @@ class TrendingTab extends Component<Props> {
   }
   renderItem(data) {
     const item = data.item;
-    return <TrendingItem item={item} onSelect={() => {}} />;
+    return <TrendingItem item={item} onSelect={() => {
+      NavigationUtil.goPage({
+        projectModel: item
+      }, 'DetailPage')
+    }} />;
   }
   genIndicator() {
     return this._store().hideLoadingMore ? null : 

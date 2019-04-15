@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View, Button, TouchableOpacity } from "react-native";
+import { Platform, StyleSheet, Text, View, Button, TouchableOpacity,DeviceInfo } from "react-native";
 import NavigationBar from '../common/NavigationBar'
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons' 
@@ -90,8 +90,7 @@ export default class MyPage extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 30,
-    backgroundColor: "#F5FCFF"
+    marginTop: DeviceInfo.isIPhoneX_deprecated ? 30 : 0
   },
   welcome: {
     fontSize: 20,

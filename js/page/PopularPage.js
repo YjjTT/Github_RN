@@ -124,10 +124,13 @@ class PopularTab extends Component<Props> {
   }
   renderItem(data) {
     const item = data.item;
-    return <PopularItem item={item} onSelect={() => {}} />;
+    return <PopularItem item={item} onSelect={() => {
+      NavigationUtil.goPage({
+        projectModel: item
+      }, 'DetailPage')
+    }} />;
   }
   genIndicator() {
-    console.log(this._store().hideLoadingMore);
     return this._store().hideLoadingMore ? null : 
       <View style={styles.indicatorContainer}>
         <ActivityIndicator style={styles.indicator} />
