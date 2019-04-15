@@ -18,12 +18,22 @@ export default class TrendingItem extends Component {
       <TouchableOpacity onPress={()=>{}} style={{padding: 6}} underlayColor={'transparent'}>
       <FontAwesome name={'star-o'} size={26} style={{color: 'red'}}/>
     </TouchableOpacity>
-
+    let description = '<p>' + item.description + '</p>'
     return (
       <TouchableOpacity onPress={this.props.onSelect}>
         <View style={styles.cell_container}>
           <Text style={styles.title}>{item.fullName}</Text>
-          <HTMLView value={item.description} stylesheet={styles.description}></HTMLView>
+          <HTMLView 
+          value={description} 
+          stylesheet={{
+            p: styles.description,
+            a: styles.description,
+          }}
+          onLinkPress={(url)=>{
+            
+          }}
+          >
+          </HTMLView>
           <Text style={styles.description}>{item.meta}</Text>
           <View style={styles.row}>
             <View style={styles.row}>

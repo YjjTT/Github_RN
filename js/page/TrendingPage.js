@@ -7,7 +7,8 @@ import {
   Button,
   FlatList,
   RefreshControl,
-  ActivityIndicator
+  ActivityIndicator,
+  DeviceInfo
 } from "react-native";
 import {
   createMaterialTopTabNavigator,
@@ -31,7 +32,8 @@ export default class TrendingPage extends Component<Props> {
         upperCaseLabel: false, // 是否标签大写
         scrollEnabled: true,
         style: {
-          backgroundColor: "#678"
+          backgroundColor: "#678",
+          height: 30,
         },
         indicatorStyle: styles.indicatorStyle,
         labelStyle: styles.labelStyle
@@ -65,7 +67,7 @@ export default class TrendingPage extends Component<Props> {
 
     const TopNav = createAppContainer(this._topBarNavigator());
     return (
-      <View style={{ flex: 1, marginTop: 30 }}>
+      <View style={{ flex: 1, marginTop: DeviceInfo.isIPhoneX_deprecated ? 30 : 0 }}>
       {navigationBar}
         <TopNav />
       </View>
@@ -190,7 +192,8 @@ const TrendingTabPage = connect(
 
 const styles = StyleSheet.create({
   tabStyle: {
-    minWidth: 50
+    // minWidth: 50
+    padding: 0,
   },
   indicatorStyle: {
     height: 2,
@@ -198,8 +201,7 @@ const styles = StyleSheet.create({
   },
   labelStyle: {
     fontSize: 13,
-    marginTop: 6,
-    marginBottom: 6
+    margin: 0,
   },
   indicatorContainer: {
     alignItems: "center"
