@@ -8,7 +8,7 @@ import {
   Image
 } from "react-native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-
+import HTMLView from 'react-native-htmlview'
 export default class TrendingItem extends Component {
   render() {
     const { item } = this.props;
@@ -23,7 +23,8 @@ export default class TrendingItem extends Component {
       <TouchableOpacity onPress={this.props.onSelect}>
         <View style={styles.cell_container}>
           <Text style={styles.title}>{item.fullName}</Text>
-          <Text style={styles.description}>{item.description}</Text>
+          <HTMLView value={item.description} stylesheet={styles.description}></HTMLView>
+          <Text style={styles.description}>{item.meta}</Text>
           <View style={styles.row}>
             <View style={styles.row}>
               <Text>Built by</Text>
