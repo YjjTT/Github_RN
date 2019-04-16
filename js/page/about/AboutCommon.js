@@ -23,7 +23,7 @@ export default class AboutCommon {
 
     componentDidMount() {
         this.backPress.componentDidMount();
-        fetch('http://www.devio.org/io/GitHubPopular/json/github_app_config.json')
+        fetch('https://raw.githubusercontent.com/YjjTT/GithubRN_JSON/master/config.json')
             .then(response => {
                 if (response.ok) {
                     return response.json();

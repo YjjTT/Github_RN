@@ -55,8 +55,6 @@ export default class WebViewPage extends Component<Props> {
     });
   }
   render() {
-    const titleLayoutStyle =
-      this.state.title.length > 20 ? { paddingRight: 30 } : null;
     let navigationBar = (
       <NavigationBar
         title={this.state.title}

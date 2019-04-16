@@ -31,13 +31,16 @@ export default class MyPage extends Component<Props> {
         params.url = "https://www.github.com/yjjtt";
         break;
       case MORE_MENU.About:
-        RouteName = 'AboutPage';
+        RouteName = "AboutPage";
         break;
+      case MORE_MENU.About_Author:
+        RouteName = "AboutMePage";
+        break;
+    }
+    if (RouteName) {
+      NavigationUtil.goPage(params, RouteName);
+    }
   }
-  if (RouteName) {
-    NavigationUtil.goPage(params, RouteName);
-  }
-}
 
   getItem(menu) {
     return ViewUtil.getMenuItem(() => this.onClick(menu), menu, THEME_COLOR);

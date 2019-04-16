@@ -20,23 +20,23 @@
       "items": [
         {
           "title": "个人博客",
-          "url": "http://jiapenghui.com"
+          "url": "https://yjjtt.top/"
         },
         {
-          "title": "CSDN",
-          "url": "http://blog.csdn.net/fengyuzhengfan"
+          "title": "掘金",
+          "url": "https://juejin.im/user/5c0a3abaf265da616d53ff59/activities"
         },
         {
           "title": "简书",
-          "url": "http://www.jianshu.com/users/ca3943a4172a/latest_articles"
+          "url": "https://www.jianshu.com/u/7c22b5c28d4b"
         },
         {
           "title": "GitHub",
-          "url": "https://github.com/crazycodeboy"
+          "url": "https://github.com/yjjtt"
         },
         {
-          "title": "慕课网",
-          "url": "http://www.imooc.com/u/4951150"
+          "title": "个人简历",
+          "url": "http://yjjtt.top/resume/index.html"
         }
       ]
     },
@@ -46,11 +46,11 @@
       "items": {
         "QQ": {
           "title": "QQ",
-          "account": "1586866509"
+          "account": "760970235"
         },
         "Email": {
           "title": "Email",
-          "account": "crazycodeboy@gmail.com"
+          "account": "yjjttnb@gmail.com"
         }
       }
     },
@@ -75,8 +75,8 @@
     "currentRepoUrl": "https://api.github.com/repos/crazycodeboy/GitHubPopular"
   },
   "author": {
-    "name": "CrazyCodeBoy",
-    "description": "专注于移动开发，分享知识，共享快乐。",
+    "name": "YjjTT",
+    "description": "对自己狠点!",
     "avatar": "http://avatar.csdn.net/1/1/E/1_fengyuzhengfan.jpg",
     "backgroundImg": "http://www.devio.org/io/GitHubPopular/img/for_githubpopular_about_me.jpg",
     "url": "http://www.devio.org/"
