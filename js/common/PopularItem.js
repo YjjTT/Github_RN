@@ -1,22 +1,15 @@
 import React, { Component } from "react";
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image
-} from "react-native";
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 import BaseItem from "./BaseItem";
 
 export default class PopularItem extends BaseItem {
   render() {
     const { projectModel } = this.props;
-    const item = projectModel;
+    const { item } = projectModel;
     if (!item || !item.owner) return null;
     return (
-      <TouchableOpacity onPress={this.props.onSelect}>
+      <TouchableOpacity onPress={() => this.onItemClick()}>
         <View style={styles.cell_container}>
           <Text style={styles.title}>{item.full_name}</Text>
           <Text style={styles.description}>{item.description}</Text>
@@ -29,7 +22,7 @@ export default class PopularItem extends BaseItem {
               />
             </View>
             <View
-              style={{ justifyContent: "space-between", flexDirection: "row" }}
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
               <Text>Start:</Text>
               <Text>{item.stargazers_count}</Text>
@@ -42,11 +35,6 @@ export default class PopularItem extends BaseItem {
   }
 }
 const styles = StyleSheet.create({
-  row: {
-    justifyContent: "space-between",
-    flexDirection: "row",
-    alignItems: "center"
-  },
   cell_container: {
     backgroundColor: "white",
     padding: 10,
@@ -58,9 +46,14 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     shadowColor: "gray",
     shadowOffset: { width: 0.5, height: 0.5 },
-    shadowRadius: 1,
     shadowOpacity: 0.4,
-    elevation: 2 // Android
+    shadowRadius: 1,
+    elevation: 2
+  },
+  row: {
+    justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems: "center"
   },
   title: {
     fontSize: 16,
@@ -70,6 +63,6 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 14,
     marginBottom: 2,
-    color: "#212121"
+    color: "#757575"
   }
 });

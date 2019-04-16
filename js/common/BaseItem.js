@@ -1,14 +1,9 @@
 import React, { Component } from "react";
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image
-} from "react-native";
-import PropTypes from "prop-types";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import HTMLView from "react-native-htmlview";
+import { PropTypes } from "prop-types";
+
 export default class BaseItem extends Component {
   static propTypes = {
     projectModel: PropTypes.object,
@@ -24,9 +19,11 @@ export default class BaseItem extends Component {
   }
 
   /**
-   * componentWillReceiveProps 已废弃
-   * @param {*} nextProps
-   * @param {*} prevState
+   * 牢记：https://github.com/reactjs/rfcs/blob/master/text/0006-static-lifecycle-methods.md
+   * componentWillReceiveProps在新版React中不能再用了
+   * @param nextProps
+   * @param prevState
+   * @returns {*}
    */
   static getDerivedStateFromProps(nextProps, prevState) {
     const isFavorite = nextProps.projectModel.isFavorite;
@@ -38,17 +35,32 @@ export default class BaseItem extends Component {
     return null;
   }
 
-  setFavoriteState() {
+  setFavoriteState(isFavorite) {
     this.props.projectModel.isFavorite = isFavorite;
     this.setState({
       isFavorite: isFavorite
     });
   }
+
+  onItemClick() {
+    this.props.onSelect(isFavorite => {
+      this.setFavoriteState(isFavorite);
+    });
+  }
+
   onPressFavorite() {
     this.setFavoriteState(!this.state.isFavorite);
     this.props.onFavorite(this.props.projectModel.item, !this.state.isFavorite);
   }
+
+  onItemClick(){
+    this.props.onSelect(isFavorite=>{
+      this.setFavoriteState(isFavorite);
+    })
+  }
+
   _favoriteIcon() {
+    const { theme } = this.props;
     return (
       <TouchableOpacity
         style={{ padding: 6 }}
@@ -58,7 +70,7 @@ export default class BaseItem extends Component {
         <FontAwesome
           name={this.state.isFavorite ? "star" : "star-o"}
           size={26}
-          style={{ color: "#678" }}
+          style={{ color: '#678' }}
         />
       </TouchableOpacity>
     );
