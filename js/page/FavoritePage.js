@@ -24,6 +24,8 @@ import FavoriteDao from '../expand/dao/FavoriteDao'
 import { FLAG_STORAGE } from "../expand/dao/DataStore";
 import FavoirteUtil from '../util/FavoirteUtil'
 import TrendingItem from "../common/TrendingItem";
+import EventBus from "react-native-event-bus";
+import EventTypes from "../util/EventTypes";
 
 const favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular);
 const URL = "https://api.github.com/search/repositories?q=";
@@ -87,7 +89,15 @@ class FavoriteTab extends Component<Props> {
     this.favoriteDao = new FavoriteDao(flag);
   }
   componentDidMount() {
-    this.loadData();
+    this.loadData(true);
+    EventBus.getInstance().addListener(EventTypes.bottom_tab_select, this.listener = data => {
+      if(data.to === 2){
+        this.loadData(false);
+      }
+    })
+  }
+  componentWillUnmount(){
+    EventBus.getInstance().removeListener(this.listener);
   }
   loadData(isShowLoading) {
     const { OnLoadFavoriteData } = this.props;
@@ -108,7 +118,14 @@ class FavoriteTab extends Component<Props> {
     }
     return store;
   }
-  
+  onFavorite(item, isFavorite){
+    FavoirteUtil.onFavorite(this.favoriteDao, item, isFavorite, this.props.flag);
+    if(this.storeName === FLAG_STORAGE.flag_popular){
+      EventBus.getInstance().fireEvent(EventTypes.favorite_changed_popular);
+    }else{
+      EventBus.getInstance().fireEvent(EventTypes.favorite_changed_trending);
+    }
+  }
   renderItem(data) {
     const item = data.item;
     const Item = this.storeName === FLAG_STORAGE.flag_popular ? PopularItem : TrendingItem;
@@ -119,7 +136,7 @@ class FavoriteTab extends Component<Props> {
         callback,
       }, 'DetailPage')
     }} 
-    onFavorite={(item, isFavorite)=>FavoirteUtil.onFavorite(favoriteDao, item, isFavorite, this.storeName)}
+    onFavorite={(item, isFavorite)=>this.onFavorite(item, isFavorite)}
     />;
   }
   genIndicator() {

@@ -69,7 +69,7 @@ export default function onAction(state = defaultState, action) {
           pageIndex: action.pageIndex
         }
       };
-    case Types.FLUSH_POPULAR_FAVORITE: //刷新收藏状态
+    case Types.FLUSH_TRENDING_FAVORITE: //刷新收藏状态
       return {
         ...state,
         [action.storeName]: {
