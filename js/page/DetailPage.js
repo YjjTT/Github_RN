@@ -15,7 +15,7 @@ import NavigationUtil from '../navigator/NavigationUtil'
 import BackPressComponent from "../common/BackPressComponent";
 
 type Props = {};
-const TRENDING_URL = 'https"//github.com/';
+const TRENDING_URL = 'https://github.com/';
 export default class DetailPage extends Component<Props> {
   constructor(props) {
     super(props);
