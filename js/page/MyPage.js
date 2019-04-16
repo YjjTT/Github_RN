@@ -21,45 +21,23 @@ const THEME_COLOR = "#678";
 
 type Props = {};
 export default class MyPage extends Component<Props> {
-  getRightButton() {
-    return (
-      <View style={{ flexDirection: "row" }}>
-        <TouchableOpacity onPress={() => {}}>
-          <View style={{ padding: 5, marginRight: 8 }}>
-            <Feather name={"search"} size={24} style={{ color: "white" }} />
-          </View>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-  getLeftButton(callBack) {
-    return (
-      <TouchableOpacity
-        style={{ padding: 8, paddingLeft: 12 }}
-        onPress={callBack}
-      >
-        <Ionicons
-          name={"ios-arrow-back"}
-          size={26}
-          style={{ color: "white" }}
-        />
-      </TouchableOpacity>
-    );
-  }
   onClick(menu) {
     let RouteName,
       params = {};
     switch (menu) {
       case MORE_MENU.Tutorial:
-        RouteName = "WebViewPage"
-        params.title = '教程'
-        params.url = 'https://www.github.com/yjjtt'
+        RouteName = "WebViewPage";
+        params.title = "教程";
+        params.url = "https://www.github.com/yjjtt";
         break;
-    }
-    if(RouteName){
-      NavigationUtil.goPage(params, RouteName);
-    }
+      case MORE_MENU.About:
+        RouteName = 'AboutPage';
+        break;
   }
+  if (RouteName) {
+    NavigationUtil.goPage(params, RouteName);
+  }
+}
 
   getItem(menu) {
     return ViewUtil.getMenuItem(() => this.onClick(menu), menu, THEME_COLOR);
@@ -74,7 +52,6 @@ export default class MyPage extends Component<Props> {
         title={"我的"}
         statusBar={statusBar}
         style={{ backgroundColor: THEME_COLOR }}
-        rightButton={this.getRightButton()}
       />
     );
     return (
@@ -82,7 +59,7 @@ export default class MyPage extends Component<Props> {
         {navigationBar}
         <ScrollView>
           <TouchableOpacity
-            onPress={() => this.OnClick(MORE_MENU.About)}
+            onPress={() => this.onClick(MORE_MENU.About)}
             style={styles.item}
           >
             <View style={styles.about_left}>
