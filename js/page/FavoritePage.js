@@ -69,7 +69,7 @@ export default class FavoritePage extends Component<Props> {
       backgroundColor: '#678',
       barStyle: 'light-content'
     }
-    let navigationBar = <NavigationBar title={'最热'} statusBar={statusBar} style={{backgroundColor:'#678'}}/>
+    let navigationBar = <NavigationBar title={'收藏'} statusBar={statusBar} style={{backgroundColor:'#678'}}/>
 
     const TopNav = createAppContainer(this._topBarNavigator());
     return (
