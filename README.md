@@ -9,3 +9,9 @@
 
 ### Usage
 - Run `react-native run-ios`
+
+### ScreenShoot
+![](https://github.com/YjjTT/ImageFile/raw/master/img/20190416163332.png)
+![](https://github.com/YjjTT/ImageFile/raw/master/img/20190416163431.png)
+![](https://github.com/YjjTT/ImageFile/raw/master/img/20190416163449.png)
+![](https://github.com/YjjTT/ImageFile/raw/master/img/20190416163504.png)
