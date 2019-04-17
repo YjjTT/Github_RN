@@ -32,14 +32,14 @@ export default class AboutPage extends Component<Props> {
     switch (menu) {
       case MORE_MENU.Tutorial:
         RouteName = "WebViewPage";
-        params.title = "教程";
-        params.url = "https://coding.m.imooc.com/classindex.html?cid=89";
+        params.title = "项目地址";
+        params.url = "hhttps://github.com/YjjTT/Github_RN";
         break;
       case MORE_MENU.About_Author:
         RouteName = "AboutMePage";
         break;
       case MORE_MENU.Feedback:
-        const url = "mailto://crazycodeboy@gmail.com";
+        const url = "mailto://yjjttnb@gmail.com";
         Linking.canOpenURL(url)
           .then(support => {
             if (!support) {

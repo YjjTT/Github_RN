@@ -21,6 +21,9 @@ export default class AboutCommon {
         return true;
     }
 
+    componentWillMount(){
+        console.log(aaaa)
+    }
     componentDidMount() {
         this.backPress.componentDidMount();
         fetch('https://raw.githubusercontent.com/YjjTT/GithubRN_JSON/master/config.json')
@@ -115,7 +118,7 @@ export default class AboutCommon {
 }
 const window = Dimensions.get('window');
 const AVATAR_SIZE = 90;
-const PARALLAX_HEADER_HEIGHT = 270;
+const PARALLAX_HEADER_HEIGHT = 300;
 const TOP = (Platform.OS === 'ios') ? 20 + (DeviceInfo.isIPhoneX_deprecated ? 24 : 0) : 0;
 const STICKY_HEADER_HEIGHT = (Platform.OS === 'ios') ? GlobalStyles.nav_bar_height_ios + TOP : GlobalStyles.nav_bar_height_android;
 
@@ -165,7 +168,9 @@ const styles = StyleSheet.create({
     },
     avatar: {
         marginBottom: 10,
-        borderRadius: AVATAR_SIZE / 2
+        borderRadius: AVATAR_SIZE / 2,
+        width: AVATAR_SIZE,
+        height: AVATAR_SIZE
     },
     sectionSpeakerText: {
         color: 'white',
