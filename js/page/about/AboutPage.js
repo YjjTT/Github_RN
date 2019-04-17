@@ -27,7 +27,8 @@ export default class AboutPage extends Component<Props> {
   }
 
   onClick(menu) {
-    let RouteName,params = {};
+    let RouteName,
+      params = {};
     switch (menu) {
       case MORE_MENU.Tutorial:
         RouteName = "WebViewPage";
@@ -53,7 +54,7 @@ export default class AboutPage extends Component<Props> {
         break;
     }
     if (RouteName) {
-        console.log(RouteName);
+      console.log(RouteName);
       NavigationUtil.goPage(params, RouteName);
     }
   }

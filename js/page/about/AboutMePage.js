@@ -7,7 +7,7 @@ import AboutCommon, { FLAG_ABOUT } from "./AboutCommon";
 import config from "../../res/data/config";
 import GlobalStyles from "../../res/GlobalStyles";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Toast from 'react-native-easy-toast'
+import Toast from "react-native-easy-toast";
 type Props = {};
 
 export default class AboutMePage extends Component<Props> {
@@ -149,9 +149,7 @@ export default class AboutMePage extends Component<Props> {
     return (
       <View style={{ flex: 1 }}>
         {this.aboutCommon.render(content, this.state.data.author)}
-        <Toast ref={toast => this.toast = toast}
-                   position={'center'}
-            />
+        <Toast ref={toast => (this.toast = toast)} position={"center"} />
       </View>
     );
   }
