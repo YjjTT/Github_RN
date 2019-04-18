@@ -30,9 +30,6 @@ export default class AboutCommon {
     return true;
   }
 
-  componentWillMount() {
-    console.log(aaaa);
-  }
   componentDidMount() {
     this.backPress.componentDidMount();
     fetch(
