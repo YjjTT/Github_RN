@@ -30,10 +30,10 @@ export default class AboutMePage extends Component<Props> {
       showContact: false
     };
   }
-  componentDidMount(){
+  componentDidMount() {
     this.aboutCommon.componentDidMount();
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.aboutCommon.componentWillUnmount();
   }
   onClick(tab) {
