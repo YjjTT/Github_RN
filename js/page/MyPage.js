@@ -130,7 +130,8 @@ const styles = StyleSheet.create({
   },
   about_left: {
     alignItems: "center",
-    flexDirection: "row"
+    flexDirection: "row"zxjkl
+
   },
   item: {
     backgroundColor: "white",
